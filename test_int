@@ -1,0 +1,26 @@
+import pytest
+
+@pytest.fixture
+def my_int():
+    return int(2)
+
+
+@pytest.fixture
+def our_int():
+    return int(370)
+
+
+def test_add(my_int, our_int):
+    assert my_int + our_int == +372
+    with pytest.raises(TypeError):
+        assert my_int + str(our_int)
+
+
+def test_sub(my_int, our_int):
+    assert my_int - our_int == -368 
+    with pytest.raises(TypeError):
+        assert my_int - str(our_int)
+
+
+  
+    
