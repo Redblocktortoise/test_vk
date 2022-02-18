@@ -1,0 +1,32 @@
+import pytest
+
+@pytest.fixture
+def my_str():
+    return "Hello, man! 2)"
+
+
+@pytest.fixture
+def our_str():
+    return "1324345345 + Bye"
+
+
+def test_sum(my_str, our_str):
+    assert my_str + our_str == 'Hello, man! 2)1324345345 + Bye'
+    assert our_str + my_str == '1324345345 + ByeHello, man! 2)'
+    assert len(my_str) + len(our_str) == 30
+    assert len(my_str) + len(our_str) == len(our_str) + len(my_str)
+
+
+def test_extract(my_str, our_str):
+    assert [int(s) for s in our_str.split() if s.isdigit()] == [1324345345]
+    
+    with pytest.raises(AssertionError):
+        assert [int(s) for s in my_str.split() if s.isdigit()] == [2]
+
+def test_substr(my_str, our_str):
+    assert my_str.index("man") == 7
+    assert our_str.index("345") == 4
+    assert my_str.split() == ['Hello,', 'man!', '2)']
+    assert our_str.split() == ['1324345345', '+', 'Bye']
+    with pytest.raises(AssertionError):
+        assert our_str.index("345") == 8
